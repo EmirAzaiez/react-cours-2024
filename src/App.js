@@ -1,25 +1,53 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import CounterButton from "./Components/CounterButton";
+import Swal from 'sweetalert2';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [users, setUsers] = useState([])
+
+    function addANewRandomUser() {
+
+        fetch('https://randomuser.me/api/').then((res) => {
+            res.json().then((json) => {
+                let newUser = json.results[0]
+                setUsers([ ...users, newUser ])
+            })
+        })
+
+    }
+
+    useEffect(() => {
+        addANewRandomUser()
+    }, [])
+
+    return (
+        <div className="App">
+            
+            {
+                users.map((user) => {
+                    return (
+                        <div>
+                            <h1>{user.name.first} {user.name.last}</h1>
+                            <img src={user.picture.large} />
+                        </div>
+                    )
+                })
+            }
+
+            <br /><br />
+
+            <button onClick={() => {
+                addANewRandomUser()
+            }}>
+                Add a new person
+            </button>
+        
+        </div>
+    );
+
 }
 
 export default App;
