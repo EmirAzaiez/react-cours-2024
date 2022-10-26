@@ -1,52 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
-import { useEffect, useState } from 'react';
-import CounterButton from "./Components/CounterButton";
-import Swal from 'sweetalert2';
+
+import { Routes, Route, BrowserRouter, Link } from 'react-router-dom';
+
+import HomeScreen from './Screens/Home';
+import RandomUserScreen from './Screens/RandomUser';
 
 function App() {
 
-    const [users, setUsers] = useState([])
-
-    function addANewRandomUser() {
-
-        fetch('https://randomuser.me/api/').then((res) => {
-            res.json().then((json) => {
-                let newUser = json.results[0]
-                setUsers([ ...users, newUser ])
-            })
-        })
-
-    }
-
-    useEffect(() => {
-        addANewRandomUser()
-    }, [])
-
     return (
-        <div className="App">
+        <BrowserRouter>
+            <nav>
+                <ul>
+                    <li> <Link to="/"> Home </Link> </li>
+                    <li> <Link to="/randomuser"> Randomuser </Link> </li>
+                </ul>
+            </nav>
             
-            {
-                users.map((user) => {
-                    return (
-                        <div>
-                            <h1>{user.name.first} {user.name.last}</h1>
-                            <img src={user.picture.large} />
-                        </div>
-                    )
-                })
-            }
+            <Routes>
+                <Route path='/' element={<HomeScreen />}></Route>
+                <Route path='/randomuser' element={<RandomUserScreen />}></Route>
+            </Routes>
 
-            <br /><br />
-
-            <button onClick={() => {
-                addANewRandomUser()
-            }}>
-                Add a new person
-            </button>
-        
-        </div>
-    );
+        </BrowserRouter>
+    )
 
 }
 
