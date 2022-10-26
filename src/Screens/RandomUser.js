@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 
 export default function RandomUser() {
 
@@ -25,10 +26,12 @@ export default function RandomUser() {
             {
                 users.map((user) => {
                     return (
-                        <div>
-                            <h1>{user.name.first} {user.name.last}</h1>
-                            <img src={user.picture.large} />
-                        </div>
+                        <Link to="/randomuser/detail" state={{ user: user }} >
+                            <div>
+                                <h1>{user.name.first} {user.name.last}</h1>
+                                <img src={user.picture.large} />
+                            </div>
+                        </Link>
                     )
                 })
             }
