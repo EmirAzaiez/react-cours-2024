@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import RandomUserCard from "../Components/RandomUserCard"
+
 export default function RandomUserDetail() {
 
     let location = useLocation()
@@ -18,14 +20,7 @@ export default function RandomUserDetail() {
     }, [])
 
     if (user) {
-        return (<div>
-
-            <img src={user.picture.thumbnail} />
-            <br />
-            {user.name.first} {user.name.last} 
-            <br />
-            {user.email}
-        </div>)
+        return <RandomUserCard user={user} showLink={false} />
     } else {
         return (<div>
             It's loading...
